@@ -60,5 +60,19 @@ $(function() {
         });
     });
 
-    
+    // Test suite for initial load of feed 
+    describe('Initial Entries', function() {
+
+        // Load feed and wait until work is done
+        beforeEach(function(done) {
+            loadFeed(0, done);
+        });
+
+        // Check that completed work contains content
+        it('loads feed', function() {
+            const container = document.querySelector('.feed');
+            expect(container.children.length > 0).toBe(true);
+        });
+    });
+
 }());
