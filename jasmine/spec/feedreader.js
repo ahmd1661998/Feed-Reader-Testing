@@ -37,4 +37,28 @@ $(function() {
             }
         });
     });
+
+    // Test suite for the apps menu functionality
+    describe('The Menu', function() {
+
+        // Check that default state of menu is hidden on page load
+        it('hidden by default', function() {
+            const body = document.querySelector('body');
+            expect(body.classList.contains('menu-hidden')).toBe(true);
+        });
+
+        // Check that menu toggles on/off from multiple clicks
+        it('toggles on/off', function() {
+            const menu = document.querySelector('.menu-icon-link');
+            const body = document.querySelector('body');
+            
+            menu.click();
+            expect(body.classList.contains('menu-hidden')).toBe(false);
+            menu.click();
+            expect(body.classList.contains('menu-hidden')).toBe(true);
+            
+        });
+    });
+
+    
 }());
