@@ -11,15 +11,14 @@
 $(function() {
     "use strict";
 
-    // test suite for RSS feed variable
+    // Test suite for RSS feed variable
     describe('RSS Feeds', function() {
-
-        // Check if allFeeds variable is defiend and not empty
+        
+        // Check if allFeeds variable is defined and not empty
         it('valid', function() {
             expect(allFeeds).toBeDefined();
             expect(allFeeds.length).not.toBe(0);
         });
-
 
         // Check if feed's url property is defined and not empty
         it('has url', function() {
@@ -36,6 +35,7 @@ $(function() {
                 expect(feed.name).not.toBe('');
             }
         });
+
     });
 
     // Test suite for the apps menu functionality
@@ -63,22 +63,23 @@ $(function() {
     // Test suite for initial load of feed 
     describe('Initial Entries', function() {
 
-        // Load feed and wait until work is done
+       // Load feed and wait until work is done
         beforeEach(function(done) {
             loadFeed(0, done);
+            loadFeed(1, done);
         });
 
         // Check that completed work contains content
-        it('loads feed', function() {
-            const container = document.querySelector('.feed');
-            expect(container.children.length > 0).toBe(true);
+        it('completes work', function() {
+            const feed = document.querySelector('.feed');
+            expect(feed.children.length > 0).toBe(true);
         });
     });
 
     // Test suite for loading new content after initial load
     describe('New Feed Selection', function() {
 
-        const container = document.querySelector('.feed');
+        const feed = document.querySelector('.feed');
         const firstFeed = [];
 
         // Load multiple feeds and compare content to ensure change
@@ -88,9 +89,9 @@ $(function() {
             loadFeed(0);
             
             // Store values of first feed
-            Array.from(container.children).forEach(content => {
-                firstFeed.push(content.innerText);
-            });
+            Array.from(feed.children).forEach(function(entry) {
+                firstFeed.push(entry.innerText);
+            })
 
             // Load second feed
             loadFeed(1, done);
@@ -98,10 +99,9 @@ $(function() {
         
         // Compare first feed against new feed content
         it('content changes', function() {
-            Array.from(container.children).forEach( (content, index) => {
-                expect(content.innerText !== firstFeed[index]).toBe(true);
+            Array.from(feed.children).forEach( (entry, index) => {
+                expect(entry.innerText !== firstFeed[index]).toBe(false);
             });
         });
     });
-
 }());
