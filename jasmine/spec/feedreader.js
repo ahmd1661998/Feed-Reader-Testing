@@ -71,8 +71,8 @@ $(function() {
 
         // Check that completed work contains content
         it('completes work', function() {
-            const feed = document.querySelector('.feed');
-            expect(feed.children.length > 0).toBe(true);
+            const feed = document.querySelectorAll('.feed .entry');
+            expect(feed.length > 0).toBe(true);
         });
     });
 
@@ -80,28 +80,23 @@ $(function() {
     describe('New Feed Selection', function() {
 
         const feed = document.querySelector('.feed');
-        const firstFeed = [];
+        const firstFeed = null;
 
         // Load multiple feeds and compare content to ensure change
         beforeEach(function(done) {
 
             // Load first feed
-            loadFeed(0);
-            
-            // Store values of first feed
-            Array.from(feed.children).forEach(function(entry) {
-                firstFeed.push(entry.innerText);
-            })
+            loadFeed(0, function() {
+                firstFeed = feed.innerText;
 
-            // Load second feed
-            loadFeed(1, done);
+                loadFeed(1, done);
+            });
         });
         
         // Compare first feed against new feed content
         it('content changes', function() {
-            Array.from(feed.children).forEach( (entry, index) => {
-                expect(entry.innerText !== firstFeed[index]).toBe(false);
-            });
+            let secondFeed = document.querySelector('.feed').innerText;
+            expect(firstFeed !== secondFeed).toBe(true);
         });
     });
 }());
